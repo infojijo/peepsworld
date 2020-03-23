@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screen_bg"
+    tools:context=".ui.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:id="@+id/image_Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                app:srcCompat="@drawable/login_top" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/phonelayout"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/image_Layout"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_phone_code">
+
+            <TextView
+                android:id="@+id/editTextPhoneCode"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:background="@drawable/code_style"
+                android:gravity="center"
+                android:maxLength="6"
+                android:padding="5dp"
+                android:text="+1"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="280dp"
+                android:layout_height="42dp"
+                android:layout_toRightOf="@id/editTextPhoneCode"
+                android:ems="10"
+                android:hint="Enter Mobile Number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textSize="@dimen/textsize" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/txtSubmit"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/phonelayout"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_style_signin"
+            android:gravity="center"
+            android:text="Sign In"
+            android:textAllCaps="true"
+            android:textSize="@dimen/textsize"
+            tools:layout_editor_absoluteY="487dp" />
+
+        <TextView
+            android:id="@+id/tv_navigate_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtSubmit"
+            android:layout_marginTop="10dp"
+            android:text="@string/signup_text_in_login"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize" />
+
+        <RelativeLayout
+            android:id="@+id/social_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_navigate_reg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/fb" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/imageView4"
+                app:srcCompat="@drawable/google" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/phonecode_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <include layout="@layout/bottom_sheet" />
+    </RelativeLayout>
+</RelativeLayout>

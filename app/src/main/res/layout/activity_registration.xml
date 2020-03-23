@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screen_bg"
+    tools:context=".ui.RegistrationActivity">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/back_arrow" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/hello_text" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView3"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/signup_title_text" />
+
+        <EditText
+            android:id="@+id/editTextFname"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/imageView4"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_phone_code"
+            android:ems="10"
+            android:hint="First name"
+            android:inputType="textPersonName"
+            android:maxLength="10"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/textsize" />
+
+        <EditText
+            android:id="@+id/editTextLname"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/editTextFname"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_phone_code"
+            android:ems="10"
+            android:hint="Last name"
+            android:inputType="textPersonName"
+            android:maxLength="10"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/textsize" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/editTextLname"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_phone_code"
+            android:ems="10"
+            android:hint="e-mail id"
+            android:inputType="textEmailAddress"
+            android:maxLength="30"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/textsize" />
+
+        <RelativeLayout
+            android:id="@+id/phonelayout"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/editTextEmail"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_phone_code">
+
+            <TextView
+                android:id="@+id/editTextPhoneCode"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:background="@drawable/code_style"
+                android:gravity="center"
+                android:maxLength="6"
+                android:padding="5dp"
+                android:text="+1 "
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="280dp"
+                android:layout_height="42dp"
+                android:layout_toRightOf="@id/editTextPhoneCode"
+                android:ems="10"
+                android:hint="Enter Mobile Number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textSize="@dimen/textsize" />
+
+        </RelativeLayout>
+
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phonelayout"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/sound"
+                style="@style/MyRadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/vibration"
+                style="@style/MyRadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+            <RadioButton
+                android:id="@+id/silent"
+                style="@style/MyRadioButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="280dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/radio_group"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style_signin"
+            android:gravity="center"
+            android:text="Sign Up"
+            android:textAllCaps="true"
+            android:textSize="@dimen/textsize"
+            tools:layout_editor_absoluteY="487dp" />
+
+        <TextView
+            android:id="@+id/tv_navigate_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView2"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/alreadyhave_account"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/phonecode_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <include layout="@layout/bottom_sheet" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ui.BottomSheetActivity">
+
+    <include layout="@layout/content_for_bottom_activity" />
+
+    <!-- Adding bottom sheet after main content -->
+    <include layout="@layout/bottom_sheet" android:visibility="gone"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
