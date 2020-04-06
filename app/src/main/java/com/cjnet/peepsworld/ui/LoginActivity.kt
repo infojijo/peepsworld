@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun callRegistrationActivity() {
-        startActivity(Intent(this, RegistrationActivity::class.java))
+        startActivity(Intent(this, LandingScreen::class.java))
         finish()
     }
 }

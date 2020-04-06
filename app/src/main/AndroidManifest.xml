@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.BottomSheetActivity"></activity>
+        <activity
+            android:name=".ui.LandingScreen"
+            android:label="Landing Screen"></activity>
+        <activity android:name=".ui.BottomSheetActivity" />
         <activity android:name=".ui.RegistrationActivity" />
         <activity
             android:name=".ui.SplashActivity"
