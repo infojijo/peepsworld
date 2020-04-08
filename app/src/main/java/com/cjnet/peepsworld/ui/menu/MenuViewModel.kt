@@ -1,14 +1,14 @@
-package com.cjnet.peepsworld.ui.dashboard
+package com.cjnet.peepsworld.ui.menu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class MenuViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>()
         .apply{
-        value = "Home"
+        value = "Menu"
     }
     val text: LiveData<String> = _text
 }

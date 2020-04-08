@@ -1,14 +1,14 @@
-package com.cjnet.peepsworld.ui.dashboard
+package com.cjnet.peepsworld.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>()
-        .apply{
-        value = "Home"
+        .apply {
+        value = "Search"
     }
     val text: LiveData<String> = _text
 }

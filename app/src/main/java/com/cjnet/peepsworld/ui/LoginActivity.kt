@@ -46,9 +46,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         editTextPhoneCode.setOnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)
         }
-        /*txtSubmit.setOnClickListener {
+        txtSubmit.setOnClickListener {
             callBottomSheet()
-        }*/
+        }
 
         phone_usa.setOnClickListener(this)
         phone_india.setOnClickListener(this)
@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun callBottomSheet() {
 
-        startActivity(Intent(this, BottomSheetActivity::class.java))
+        startActivity(Intent(this, LandingScreen::class.java))
 
     }
 
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun callRegistrationActivity() {
-        startActivity(Intent(this, LandingScreen::class.java))
+        startActivity(Intent(this, RegistrationActivity::class.java))
         finish()
     }
 }
