@@ -7,6 +7,9 @@
     <color name="color_submit_button">#00F2D3</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_code_bg">#F5F5F5</color>
+    <color name="location_bg">#004C8D</color>
+    <color name="color_code_bg_main">#E1E1E1</color>
+
 
 
 </resources>

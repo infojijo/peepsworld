@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@drawable/round_style_post"
     android:padding="5dp">
 
     <RelativeLayout
@@ -23,7 +25,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_user" />
+                android:src="@drawable/pp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

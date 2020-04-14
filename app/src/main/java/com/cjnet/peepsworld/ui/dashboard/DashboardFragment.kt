@@ -19,14 +19,15 @@ class DashboardFragment : Fragment() {
     private lateinit var menuViewModel: DashboardViewModel
 
     private val sampleFeedsList = listOf(
-        Feed("Raising Arizona", "Jijo"),
-        Feed("Vampire's Kiss", "Elyce"),
-        Feed("Con Air", "Jose"),
-        Feed("Gone in 60 Seconds", "Joseph"),
-        Feed("National Treasure", "Jijo"),
-        Feed("The Wicker Man", "Nico"),
-        Feed("Ghost Rider", "Game"),
-        Feed("Knowing", "Seeth")
+        Feed("Raising Arizona", "Jijo",1),
+        Feed("Raising Arizona", "Jijo",0),
+        Feed("Vampire's Kiss", "Elyce",0),
+        Feed("Con Air", "Jose",0),
+        Feed("Gone in 60 Seconds", "Joseph",0),
+        Feed("National Treasure", "Jijo",0),
+        Feed("The Wicker Man", "Nico",0),
+        Feed("Ghost Rider", "Game",0),
+        Feed("Knowing", "Seeth",0)
     )
 
     override fun onCreateView(
