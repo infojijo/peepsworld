@@ -107,6 +107,7 @@
                 android:layout_height="42dp"
                 android:layout_toRightOf="@id/editTextPhoneCode"
                 android:ems="10"
+                android:background="@android:color/transparent"
                 android:hint="Enter Mobile Number"
                 android:inputType="number"
                 android:maxLength="10"

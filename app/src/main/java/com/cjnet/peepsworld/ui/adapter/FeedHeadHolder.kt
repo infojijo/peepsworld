@@ -1,5 +1,6 @@
 package com.cjnet.peepsworld.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ class FeedHeadHolder(inflater: LayoutInflater, parent: ViewGroup) :
             false
         )
     ) {
-    fun bind(movie: Feed) {
+    fun bind(movie: Feed, mContext: Context) {
 
     }
 

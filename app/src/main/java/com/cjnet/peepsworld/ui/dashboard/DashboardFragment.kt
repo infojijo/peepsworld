@@ -1,6 +1,7 @@
 package com.cjnet.peepsworld.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +20,44 @@ class DashboardFragment : Fragment() {
     private lateinit var menuViewModel: DashboardViewModel
 
     private val sampleFeedsList = listOf(
-        Feed("Raising Arizona", "Jijo",1),
-        Feed("Raising Arizona", "Jijo",0),
-        Feed("Vampire's Kiss", "Elyce",0),
-        Feed("Con Air", "Jose",0),
-        Feed("Gone in 60 Seconds", "Joseph",0),
-        Feed("National Treasure", "Jijo",0),
-        Feed("The Wicker Man", "Nico",0),
-        Feed("Ghost Rider", "Game",0),
-        Feed("Knowing", "Seeth",0)
+        Feed("Raising Arizona is the best movie ever released in Hollywood",
+            "Abraham",
+            1,
+            "www.google.com"),
+        Feed("The charges against Raising Arizona made the movie a blockbuster",
+            "Adam John",
+            0
+            ,"www.google.com"),
+        Feed("Vampire's Kiss is the best movie ever released in Hollywood",
+            "Elyce Pyrie",
+            2,
+            "https://www.youtube.com/watch?v=EIViC-TCP3g"),
+        Feed("Con Air was one of the heck movie",
+            "Jose Alexander",
+            0,
+            "www.google.com"),
+        Feed("Gone in 60 Seconds was just good for 60 seconds",
+            "Nicolas Cage",
+            0,
+            "www.google.com"),
+        Feed("ഏവർക്കും എന്റെ ഹൃദയം നിറഞ്ഞ വിഷു ആശംസകൾ",
+            "അനിത വർമ്മ ",
+            0,
+            "www.google.com"),
+        Feed("The Wicker Man was movie about a wicked man",
+            "John Janice",
+            0,
+            "www.google.com"),
+        Feed("Ghost Rider rides well than normal riders",
+            "Gane Sander",
+            0,
+            "www.google.com"),
+        Feed(
+            "Knowing that this is just a simple text was an amazing discovery infact a great one!",
+            "Seetha Devi",
+            2,
+            "https://www.freepik.com/"
+        )
     )
 
     override fun onCreateView(
@@ -46,6 +76,7 @@ class DashboardFragment : Fragment() {
         menuViewModel.text.observe(this, Observer {
             textView.text = it
         })
+
         return root
     }
 
@@ -54,7 +85,7 @@ class DashboardFragment : Fragment() {
 
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(sampleFeedsList)
+            adapter = ListAdapter(sampleFeedsList, context)
         }
     }
 }

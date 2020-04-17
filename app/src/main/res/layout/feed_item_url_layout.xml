@@ -102,10 +102,10 @@
             <ImageView
                 android:id="@+id/post_extra"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/post_sample" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_loading" />
 
         </RelativeLayout>
 

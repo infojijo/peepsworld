@@ -1,5 +1,6 @@
 package com.cjnet.peepsworld.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -23,7 +24,7 @@ class FeedViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mProfile = itemView.findViewById(R.id.pp_name)
     }
 
-    fun bind(movie: Feed) {
+    fun bind(movie: Feed, mContext: Context) {
         mPostComment?.text = movie.post_text.toString()
         mProfile?.text = movie.profile_name.toString()
     }
