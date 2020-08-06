@@ -4,16 +4,51 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cjnet.peepsworld.R
+import com.cjnet.peepsworld.models.userToken
+import com.cjnet.peepsworld.network.PeepsWorldServerInterface
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker.OnCountryChangeListener
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
+
+    var disposable: Disposable? = null
+    val wikiApiServe by lazy {
+        PeepsWorldServerInterface.create()
+    }
+
+    private fun beginFetch(token: String) {
+
+        val headMap: MutableMap<String, String> = HashMap()
+        headMap["Content-Type"] = "application/json"
+        val userToken = userToken(token)
+
+        disposable = wikiApiServe.login(headMap, userToken)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    startActivity(Intent(this, LandingScreen::class.java))
+                },
+                { error ->
+                    Toast.makeText(
+                        this,
+                        "Error while login"+error.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.getId()) {
@@ -42,6 +77,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        et_token.setText("98f13708210194c475687be6106a3b84")
         tv_navigate_reg.setOnClickListener { callRegistrationActivity() }
         editTextPhoneCode.setOnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)
@@ -58,8 +94,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun callBottomSheet() {
-
-        startActivity(Intent(this, LandingScreen::class.java))
+        et_token.setText("98f13708210194c475687be6106a3b84")
+        beginFetch(et_token.text.toString())
+        //
 
     }
 
