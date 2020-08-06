@@ -46,7 +46,7 @@ class DashboardFragment : Fragment() {
             "Vampire's Kiss is the best movie ever released in Hollywood",
             "Elyce Pyrie",
             2,
-            "https://www.youtube.com/watch?v=EIViC-TCP3g"
+            "https://www.freepik.com/"
         ),
         Feed(
             "Con Air was one of the heck movie",
