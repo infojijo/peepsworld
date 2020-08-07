@@ -102,7 +102,7 @@
                 android:textSize="@dimen/textsize" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/et_mobile"
                 android:layout_width="280dp"
                 android:layout_height="42dp"
                 android:layout_toRightOf="@id/editTextPhoneCode"
@@ -147,7 +147,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txt_registration"
             android:layout_width="280dp"
             android:layout_height="42dp"
             android:layout_below="@id/radio_group"
@@ -164,7 +164,7 @@
             android:id="@+id/tv_navigate_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView2"
+            android:layout_below="@id/txt_registration"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
             android:text="@string/alreadyhave_account"

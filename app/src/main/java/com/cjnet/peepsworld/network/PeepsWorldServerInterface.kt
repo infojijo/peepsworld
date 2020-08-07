@@ -2,6 +2,7 @@ package com.cjnet.peepsworld.network
 
 import com.cjnet.peepsworld.models.AllFeedsResponse
 import com.cjnet.peepsworld.models.LoginResponse
+import com.cjnet.peepsworld.models.RegistrationBody
 import com.cjnet.peepsworld.models.userToken
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
@@ -23,6 +24,10 @@ interface PeepsWorldServerInterface {
 
     @POST("login.php")
     fun login(@HeaderMap header: Map<String, String>, @Body user: userToken):
+            Observable<LoginResponse>
+
+    @POST("registration.php")
+    fun registration(@HeaderMap header: Map<String, String>, @Body user: RegistrationBody):
             Observable<LoginResponse>
 
     companion object {
