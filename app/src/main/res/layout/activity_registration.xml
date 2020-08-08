@@ -125,21 +125,21 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/sound"
+                android:id="@+id/mr"
                 style="@style/MyRadioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male" />
 
             <RadioButton
-                android:id="@+id/vibration"
+                android:id="@+id/ms"
                 style="@style/MyRadioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female" />
 
             <RadioButton
-                android:id="@+id/silent"
+                android:id="@+id/mx"
                 style="@style/MyRadioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -61,7 +61,7 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)
         }
         txt_registration.setOnClickListener {
-            signInCall()
+            signUpCall()
         }
 
         phone_usa.setOnClickListener(this)
@@ -70,7 +70,23 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
         phone_canada.setOnClickListener(this)
     }
 
-    private fun signInCall() {
+
+    private fun gender():String{
+
+        var genderString:String = "X"
+
+
+        if(mr.isChecked){
+            genderString = "M"
+        }
+        else if(ms.isChecked){
+            genderString = "F"
+        }
+
+        return genderString
+    }
+
+    private fun signUpCall() {
 
 
         progressBar_layout.setVisibility(View.VISIBLE)
@@ -82,7 +98,7 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
             editTextLname.text.toString(),
             editTextEmail.text.toString(),
             et_mobile.text.toString(),
-            "M"
+            gender()
         )
 
         disposable = wikiApiServe.registration(headMap, registrationUser)
