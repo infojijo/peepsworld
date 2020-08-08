@@ -15,6 +15,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.android.synthetic.main.progress_layout.*
 
 class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
 
@@ -71,6 +72,9 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun signInCall() {
 
+
+        progressBar_layout.setVisibility(View.VISIBLE)
+
         val headMap: MutableMap<String, String> = HashMap()
         headMap["Content-Type"] = "application/json"
         val registrationUser = RegistrationBody(
@@ -86,9 +90,11 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     startActivity(Intent(this, LandingScreen::class.java))
                 },
                 { error ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     Toast.makeText(
                         this,
                         "Error while registering"+error.message,

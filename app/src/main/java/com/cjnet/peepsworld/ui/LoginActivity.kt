@@ -17,6 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.android.synthetic.main.progress_layout.*
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun beginFetch(token: String) {
 
+        progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
         headMap["Content-Type"] = "application/json"
         val userToken = userToken(token)
@@ -37,9 +39,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     startActivity(Intent(this, LandingScreen::class.java))
                 },
                 { error ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     Toast.makeText(
                         this,
                         "Error while login"+error.message,
