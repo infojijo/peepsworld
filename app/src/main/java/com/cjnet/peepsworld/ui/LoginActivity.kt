@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 { result ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     startActivity(Intent(this, LandingScreen::class.java))
+                    this.finish()
                 },
                 { error ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
@@ -81,7 +82,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        et_token.setText("98f13708210194c475687be6106a3b84")
+        et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
         tv_navigate_reg.setOnClickListener { callRegistrationActivity() }
         editTextPhoneCode.setOnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)
@@ -98,7 +99,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun callBottomSheet() {
-        et_token.setText("98f13708210194c475687be6106a3b84")
+        et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
         beginFetch(et_token.text.toString())
         //
 
@@ -115,6 +116,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     fun callRegistrationActivity() {
         startActivity(Intent(this, RegistrationActivity::class.java))
-        finish()
+        this.finish()
     }
 }

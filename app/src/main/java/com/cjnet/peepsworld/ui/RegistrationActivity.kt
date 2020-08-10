@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.RegistrationBody
-import com.cjnet.peepsworld.models.userToken
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,8 +15,10 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.progress_layout.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
-class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
+class RegistrationActivity : AppCompatActivity(), View.OnClickListener {
 
     var disposable: Disposable? = null
     val wikiApiServe by lazy {
@@ -53,15 +54,19 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
 
         tv_navigate_login.setOnClickListener { navigateToLogin() }
         img_back.setOnClickListener { navigateToLogin() }
-       /* editTextPhoneCode.setOnClickListener {
-            openccp()
-        }*/
+        /* editTextPhoneCode.setOnClickListener {
+             openccp()
+         }*/
 
         editTextPhoneCode.setOnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)
         }
         txt_registration.setOnClickListener {
+            genderError.setVisibility(View.INVISIBLE)
+            if(validation())
             signUpCall()
+            else
+                Toast.makeText(this,"Please fill all fields",Toast.LENGTH_SHORT).show()
         }
 
         phone_usa.setOnClickListener(this)
@@ -71,16 +76,43 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
     }
 
 
-    private fun gender():String{
+    private fun validation(): Boolean {
+        var valid: Boolean = true;
 
-        var genderString:String = "X"
-
-
-        if(mr.isChecked){
-            genderString = "M"
+        if (editTextFname.text.toString().isEmpty()) {
+            valid = false;
+        } else if (editTextLname.text.toString().isEmpty()) {
+            valid = false;
+        } else if (editTextEmail.text.toString().isEmpty()) {
+            valid = false;
+        }else if(et_mobile.text.toString().isEmpty()){
+            valid = false;
+        }else if(et_mobile.text.length<10){
+            valid = false;
+            et_mobile.setError("mobile number is not valid")
         }
-        else if(ms.isChecked){
+
+        else if(!emailvalidation(editTextEmail.text.toString())){
+            editTextEmail.setError("please check email format")
+            valid = false;
+        } else if(gender().equals("N")){
+            genderError.setVisibility(View.VISIBLE)
+            //radio_group.setBackgroundColor(resources.getColor(R.color.colorAccent))
+            valid = false;
+        }
+        return valid
+    }
+
+    private fun gender(): String {
+
+        var genderString: String = "N"
+
+        if (mr.isChecked) {
+            genderString = "M"
+        } else if (ms.isChecked) {
             genderString = "F"
+        } else if(mx.isChecked){
+            genderString = "X"
         }
 
         return genderString
@@ -91,7 +123,7 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
 
         progressBar_layout.setVisibility(View.VISIBLE)
 
-        val headMap: MutableMap<String, String> = HashMap()
+        val headMap: MutableMap<String, String> = HashMap();
         headMap["Content-Type"] = "application/json"
         val registrationUser = RegistrationBody(
             editTextFname.text.toString(),
@@ -107,13 +139,15 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
             .subscribe(
                 { result ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
-                    startActivity(Intent(this, LandingScreen::class.java))
+                    if (result.success == "201") {
+                        startActivity(Intent(this, LandingScreen::class.java))
+                    }
                 },
                 { error ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     Toast.makeText(
                         this,
-                        "Error while registering"+error.message,
+                        "Error while registering" + error.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -134,4 +168,16 @@ class RegistrationActivity : AppCompatActivity() , View.OnClickListener {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
+
+    private fun emailvalidation(email:String):Boolean{
+
+        var EMAIL_REGEX  = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+        var pattern: Pattern;
+        var matcher: Matcher;
+
+        pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+        }
+
 }

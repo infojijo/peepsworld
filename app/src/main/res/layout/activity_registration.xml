@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
             app:srcCompat="@drawable/hello_text" />
 
         <ImageView
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageView3"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
             app:srcCompat="@drawable/signup_title_text" />
 
         <EditText
@@ -115,36 +117,58 @@
 
         </RelativeLayout>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/radio_group"
+    android:layout_below="@id/phonelayout"
+    android:layout_marginLeft="20dp"
+    android:gravity="center"
+    android:layout_centerInParent="true"
+    android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/radio_group"
+    <RadioGroup
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/mr"
+            style="@style/MyRadioButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/phonelayout"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:text="Male" />
 
-            <RadioButton
-                android:id="@+id/mr"
-                style="@style/MyRadioButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Male" />
+        <RadioButton
+            android:id="@+id/ms"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
 
-            <RadioButton
-                android:id="@+id/ms"
-                style="@style/MyRadioButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Female" />
+        <RadioButton
+            android:id="@+id/mx"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/genderError"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="*"
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/radio"
+        android:textColor="@color/colorAccent"
+        android:layout_height="wrap_content"/>
 
-            <RadioButton
-                android:id="@+id/mx"
-                style="@style/MyRadioButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Other" />
-        </RadioGroup>
+</RelativeLayout>
 
         <TextView
             android:id="@+id/txt_registration"
@@ -162,11 +186,13 @@
 
         <TextView
             android:id="@+id/tv_navigate_login"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_registration"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="@string/alreadyhave_account"
             android:textColor="#ffffff"
             android:textSize="@dimen/textsize" />
@@ -178,7 +204,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:visibility="gone">
-
         <include layout="@layout/bottom_sheet" />
     </RelativeLayout>
 
