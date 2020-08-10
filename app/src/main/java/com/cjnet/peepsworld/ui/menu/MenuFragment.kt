@@ -1,6 +1,7 @@
 package com.cjnet.peepsworld.ui.menu
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +18,19 @@ class MenuFragment : Fragment() {
 
     private lateinit var menuViewModel: MenuViewModel
 
+    private var PRIVATE_MODE = 0
+    private val PREF_NAME = "user_sp"
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val sharedPref: SharedPreferences? = activity?.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
+
         menuViewModel =
             ViewModelProviders.of(this).get(MenuViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_menu,
@@ -29,7 +38,7 @@ class MenuFragment : Fragment() {
             false)
         val textView: TextView = root.findViewById(R.id.text_menu)
         menuViewModel.text.observe(this, Observer {
-            textView.text = it
+            textView.text = sharedPref?.getString(PREF_NAME,"Walker")
             logout.setOnClickListener {
                 activity?.finish()
                 startActivity(Intent(activity, LoginActivity::class.java))

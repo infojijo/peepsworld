@@ -1,6 +1,7 @@
 package com.cjnet.peepsworld.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -27,7 +28,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         PeepsWorldServerInterface.create()
     }
 
+    private var PRIVATE_MODE = 0
+    private val PREF_NAME = "user_sp"
+
     private fun beginFetch(token: String) {
+
+        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
+        val editor = sharedPref.edit()
+        editor.putString(PREF_NAME, "John")
+        editor.apply()
+
 
         progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
