@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         editor.putString(PREF_NAME, "John")
         editor.apply()
 
-
         progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
         headMap["Content-Type"] = "application/json"
@@ -51,8 +50,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .subscribe(
                 { result ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
+                    if(result.success.equals("200"))
+                    {
                     startActivity(Intent(this, LandingScreen::class.java))
                     this.finish()
+                    }
+                    else{
+                        Toast.makeText(
+                            this,
+                            "Error while login",
+                            Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 { error ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
@@ -110,7 +119,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun callBottomSheet() {
-        et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
+        //et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
         beginFetch(et_token.text.toString())
         //
 
