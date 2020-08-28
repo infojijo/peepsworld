@@ -57,8 +57,6 @@
                 android:hint="Token goes here"
                 android:paddingLeft="10dp"
                 android:textStyle="bold"
-                android:textAllCaps="true"
-                android:inputType="number"
                 android:maxLength="40"
                 android:textSize="18sp" />
 

@@ -98,7 +98,7 @@ class DashboardFragment : Fragment() {
                 { result ->
                     Toast.makeText(
                         activity,
-                        "Result-> " + result.feeds.size,
+                        "Results Fetched-> ",
                         Toast.LENGTH_SHORT
                     ).show()
                 },

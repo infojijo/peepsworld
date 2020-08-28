@@ -31,13 +31,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "user_sp"
 
-    private fun beginFetch(token: String) {
+    private fun saveUser(email: String){
 
         val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-
         val editor = sharedPref.edit()
-        editor.putString(PREF_NAME, "John")
+        editor.putString(PREF_NAME, email)
         editor.apply()
+    }
+
+    private fun beginFetch(token: String) {
+
+
 
         progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
@@ -52,7 +56,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     if(result.success.equals("200"))
                     {
-                    startActivity(Intent(this, LandingScreen::class.java))
+                        saveUser(result.userEmail)
+                        startActivity(Intent(this, LandingScreen::class.java))
+
                     this.finish()
                     }
                     else{
@@ -102,7 +108,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
+        //et_token.setText("98f13708210194c475687be6106a3b84".capitalize())
         tv_navigate_reg.setOnClickListener { callRegistrationActivity() }
         editTextPhoneCode.setOnClickListener {
             phonecode_layout.setVisibility(View.VISIBLE)

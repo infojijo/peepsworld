@@ -3,7 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="color_splash">#0057BD</color>
+    <color name="color_splash">#0D5EA4</color>
     <color name="color_submit_button">#00F2D3</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_code_bg">#F5F5F5</color>
@@ -11,8 +11,5 @@
     <color name="color_code_bg_main">#E1E1E1</color>
     <color name="colorBlack">#000000</color>
     <color name="color_code_bg_main_trans">#88E1E1E1</color>
-
-
-
 
 </resources>
