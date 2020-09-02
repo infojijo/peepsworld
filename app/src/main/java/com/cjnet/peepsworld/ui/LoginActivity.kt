@@ -4,9 +4,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.userToken
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
@@ -121,6 +123,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         phone_india.setOnClickListener(this)
         phone_mexico.setOnClickListener(this)
         phone_canada.setOnClickListener(this)
+
+        val window = this.getWindow()
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color_splash))
     }
 
 
