@@ -24,11 +24,13 @@ class FeedURLHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var mPostComment: TextView? = null
     private var mProfile: TextView? = null
     private var richLinkViewTel: ImageView
+    var mLike: ImageView? = null
 
     init {
         mPostComment = itemView.findViewById(R.id.post_text)
         mProfile = itemView.findViewById(R.id.pp_name)
         richLinkViewTel = itemView.findViewById(R.id.post_extra)
+        mLike = itemView.findViewById(R.id.action_like)
     }
 
     fun bind(movie: Feed, mContext: Context) {

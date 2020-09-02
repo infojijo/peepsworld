@@ -1,6 +1,7 @@
 package com.cjnet.peepsworld.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cjnet.peepsworld.R
+import com.cjnet.peepsworld.models.AllFeedsResponse
 import com.cjnet.peepsworld.models.Feed
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
 import com.cjnet.peepsworld.ui.adapter.ListAdapter
@@ -18,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.progress_layout.*
 
 
 class DashboardFragment : Fragment() {
@@ -29,65 +32,11 @@ class DashboardFragment : Fragment() {
     }
     var disposable: Disposable? = null
 
-    private val sampleFeedsList = listOf(
-        Feed(
-            "Raising Arizona is the best movie ever released in Hollywood",
-            "Abraham",
-            1,
-            "www.google.com"
-        ),
-        Feed(
-            "The charges against Raising Arizona made the movie a blockbuster",
-            "Adam John",
-            0
-            , "www.google.com"
-        ),
-        Feed(
-            "Vampire's Kiss is the best movie ever released in Hollywood",
-            "Elyce Pyrie",
-            2,
-            "https://www.freepik.com/"
-        ),
-        Feed(
-            "Con Air was one of the heck movie",
-            "Jose Alexander",
-            0,
-            "www.google.com"
-        ),
-        Feed(
-            "Gone in 60 Seconds was just good for 60 seconds",
-            "Nicolas Cage",
-            0,
-            "www.google.com"
-        ),
-        Feed(
-            "ഏവർക്കും എന്റെ ഹൃദയം നിറഞ്ഞ വിഷു ആശംസകൾ",
-            "അനിത വർമ്മ ",
-            0,
-            "www.google.com"
-        ),
-        Feed(
-            "The Wicker Man was movie about a wicked man",
-            "John Janice",
-            0,
-            "www.google.com"
-        ),
-        Feed(
-            "Ghost Rider rides well than normal riders",
-            "Gane Sander",
-            0,
-            "www.google.com"
-        ),
-        Feed(
-            "Knowing that this is just a simple text was an amazing discovery infact a great one!",
-            "Seetha Devi",
-            2,
-            "https://www.freepik.com/"
-        )
-    )
+    val feedList = ArrayList<Feed>()
 
     private fun beginFetch() {
 
+        progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
         headMap["Content-Type"] = "application/json"
 
@@ -96,13 +45,17 @@ class DashboardFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     Toast.makeText(
                         activity,
-                        "Results Fetched-> ",
+                        "Results Fetched Successfully",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    arrangeFeed(result)
                 },
                 { error ->
+                    progressBar_layout.setVisibility(View.INVISIBLE)
                     Toast.makeText(
                         activity,
                         error.message,
@@ -110,6 +63,43 @@ class DashboardFragment : Fragment() {
                     ).show()
                 }
             )
+    }
+
+    fun arrangeFeed(feedResponse: AllFeedsResponse) {
+
+        feedList.add(Feed(
+            "Raising Arizona is the best movie ever released in Hollywood",
+            "Abraham",
+            1,
+            "www.google.com",
+            "",
+            ""
+        ))
+
+        for (i in 0..feedResponse.feeds.size - 1) {
+
+            if (feedResponse.feeds.get(i).post.postTitle != null &&
+                !feedResponse.feeds.get(i).post.postTitle.equals("")) {
+                Log.v("Post Titles->", feedResponse.feeds.get(i).creator.creatorFullName+":"
+                        +feedResponse.feeds.get(i).post.postTitle)
+
+                feedList.add(
+                    Feed(
+                        feedResponse.feeds.get(i).post.postTitle,
+                        feedResponse.feeds.get(i).creator.creatorFullName,
+                        0,
+                        feedResponse.feeds.get(i).post.postLink,
+                        feedResponse.feeds.get(i).feedLikeCount,
+                        feedResponse.feeds.get(i).feedCommentCount
+                    )
+                )
+            }
+        }
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ListAdapter(feedList, context)
+        }
+
     }
 
     override fun onCreateView(
@@ -136,9 +126,6 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         beginFetch()
-        recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(sampleFeedsList, context)
-        }
+
     }
 }

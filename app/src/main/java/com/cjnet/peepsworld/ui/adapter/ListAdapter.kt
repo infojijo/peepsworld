@@ -3,7 +3,10 @@ package com.cjnet.peepsworld.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.Feed
 
 class ListAdapter(
@@ -30,14 +33,28 @@ class ListAdapter(
         if (movie.post_type == 0) {
             hold = holder as FeedViewHolder
             hold.bind(movie, mContext)
+            hold.mLike?.setOnClickListener {
+                onLikeClick()
+            }
+
+
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
             holdURL.bind(movie, mContext)
+            holdURL.mLike?.setOnClickListener {
+                onLikeClick()
+            }
+
         } else {
             holdhead = holder as FeedHeadHolder
             holdhead.bind(movie, mContext)
         }
 
+
+    }
+
+    fun onLikeClick(){
+        Toast.makeText(mContext, "You clicked me.", Toast.LENGTH_SHORT).show()
     }
 
     override fun getItemCount(): Int = list.size
