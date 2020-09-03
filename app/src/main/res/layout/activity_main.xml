@@ -53,12 +53,11 @@
                 android:layout_width="280dp"
                 android:layout_height="42dp"
                 android:background="@android:color/transparent"
-                android:ems="40"
-                android:hint="Token goes here"
+                android:ems="20"
+                android:hint="TOKEN GOES HERE"
                 android:paddingLeft="10dp"
-                android:textStyle="bold"
                 android:maxLength="40"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 

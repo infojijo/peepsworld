@@ -68,10 +68,11 @@ class DashboardFragment : Fragment() {
     fun arrangeFeed(feedResponse: AllFeedsResponse) {
 
         feedList.add(Feed(
-            "Raising Arizona is the best movie ever released in Hollywood",
-            "Abraham",
+            "",
+            "",
+            "",
             1,
-            "www.google.com",
+            "",
             "",
             ""
         ))
@@ -85,6 +86,7 @@ class DashboardFragment : Fragment() {
 
                 feedList.add(
                     Feed(
+                        feedResponse.feeds.get(i).feedID,
                         feedResponse.feeds.get(i).post.postTitle,
                         feedResponse.feeds.get(i).creator.creatorFullName,
                         0,

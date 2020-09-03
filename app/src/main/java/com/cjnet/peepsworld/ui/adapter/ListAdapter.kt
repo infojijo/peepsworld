@@ -3,8 +3,8 @@ package com.cjnet.peepsworld.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.Feed
@@ -34,15 +34,24 @@ class ListAdapter(
             hold = holder as FeedViewHolder
             hold.bind(movie, mContext)
             hold.mLike?.setOnClickListener {
-                onLikeClick()
+                onLikeClick(list.get(position).post_feed_id)
+
+                if(hold.mLike?.drawable?.constantState == ContextCompat.getDrawable(mContext, R.drawable.ic_like)?.constantState){
+                hold.mLike?.setImageResource(R.drawable.ic_liked);
             }
+            else{
+                hold.mLike?.setImageResource(R.drawable.ic_like);
+            }
+        }
 
 
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
             holdURL.bind(movie, mContext)
             holdURL.mLike?.setOnClickListener {
-                onLikeClick()
+                onLikeClick(list.get(position).post_feed_id)
+
+
             }
 
         } else {
@@ -53,8 +62,11 @@ class ListAdapter(
 
     }
 
-    fun onLikeClick(){
-        Toast.makeText(mContext, "You clicked me.", Toast.LENGTH_SHORT).show()
+    fun onLikeClick(id:String){
+
+        Toast.makeText(mContext, "You clicked "+id+"th Feed", Toast.LENGTH_SHORT).show()
+        //network call for like/unlike
+
     }
 
     override fun getItemCount(): Int = list.size
