@@ -10,9 +10,11 @@ import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.Feed
 
 class ListAdapter(
-    private val list: List<Feed>,
+    private var list: List<Feed>,
     private val mContext: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,43 +25,45 @@ class ListAdapter(
         } else {
             return FeedHeadHolder(inflater, parent)
         }
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var hold: FeedViewHolder
         var holdURL: FeedURLHolder
         var holdhead: FeedHeadHolder
-        val movie: Feed = list[position]
+        var movie: Feed = list[position]
+
         if (movie.post_type == 0) {
             hold = holder as FeedViewHolder
-            hold.bind(movie, mContext)
+            hold.bind(movie)
             hold.mLike?.setOnClickListener {
                 onLikeClick(list.get(position).post_feed_id)
-
                 if(hold.mLike?.drawable?.constantState == ContextCompat.getDrawable(mContext, R.drawable.ic_like)?.constantState){
+                  hold.mLike?.setImageResource(R.drawable.ic_liked);
+                    list.get(position).post_liked_from_server = true
+                }
+               else{
+                  hold.mLike?.setImageResource(R.drawable.ic_like);
+                    list.get(position).post_liked_from_server = false
+              }
+            }
+            if(list.get(position).post_liked_from_server){
                 hold.mLike?.setImageResource(R.drawable.ic_liked);
             }
             else{
                 hold.mLike?.setImageResource(R.drawable.ic_like);
             }
-        }
-
-
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
             holdURL.bind(movie, mContext)
             holdURL.mLike?.setOnClickListener {
                 onLikeClick(list.get(position).post_feed_id)
-
-
             }
-
         } else {
             holdhead = holder as FeedHeadHolder
             holdhead.bind(movie, mContext)
         }
-
-
     }
 
     fun onLikeClick(id:String){
@@ -68,6 +72,8 @@ class ListAdapter(
         //network call for like/unlike
 
     }
+
+
 
     override fun getItemCount(): Int = list.size
 

@@ -54,6 +54,7 @@
                 android:layout_height="42dp"
                 android:background="@android:color/transparent"
                 android:ems="20"
+                android:text="98f13708210194c475687be6106a3b84"
                 android:hint="TOKEN GOES HERE"
                 android:paddingLeft="10dp"
                 android:maxLength="40"

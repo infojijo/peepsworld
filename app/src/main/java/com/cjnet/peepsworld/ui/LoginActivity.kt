@@ -3,6 +3,7 @@ package com.cjnet.peepsworld.ui
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.cjnet.peepsworld.R
+import com.cjnet.peepsworld.models.UserLikes
 import com.cjnet.peepsworld.models.userToken
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -21,6 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.progress_layout.*
+import java.lang.StringBuilder
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -32,6 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "user_sp"
+    private val PREF_LIKES = "user_likes"
 
     private fun saveUser(email: String){
 
@@ -39,6 +43,37 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val editor = sharedPref.edit()
         editor.putString(PREF_NAME, email)
         editor.apply()
+    }
+
+    fun arrangeLikes(listString: List<UserLikes>){
+
+        val likesString = StringBuilder()
+        for(i in 0..listString.size - 1){
+            likesString.append(listString.get(i).feedId+",")
+        }
+        val sharedPref: SharedPreferences = getSharedPreferences(PREF_LIKES, PRIVATE_MODE)
+        val editor = sharedPref.edit()
+        editor.putString(PREF_LIKES, likesString.toString())
+        editor.apply()
+
+    }
+
+    fun callLikes(userdID: String) {
+
+        val headMap: MutableMap<String, String> = HashMap()
+        headMap["Content-Type"] = "application/json"
+        disposable = wikiApiServe.userLikes(headMap,userdID)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result ->
+                arrangeLikes(result.feeds)
+                startActivity(Intent(this, LandingScreen::class.java))
+                this.finish()
+                Toast.makeText(applicationContext,"FeedID->"+result.feeds.get(0).commentText, Toast.LENGTH_SHORT).show()
+            },
+                { error ->
+                    Log.w("Peeps",error.message)
+                })
     }
 
     private fun beginFetch(token: String) {
@@ -58,10 +93,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     if(result.success.equals("200"))
                     {
+                        callLikes("1")
                         saveUser(result.userEmail)
-                        startActivity(Intent(this, LandingScreen::class.java))
 
-                    this.finish()
                     }
                     else{
                         Toast.makeText(
@@ -69,7 +103,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             "Error while login",
                             Toast.LENGTH_SHORT).show()
                     }
-
                 },
                 { error ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
@@ -128,6 +161,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color_splash))
+
+
     }
 
 

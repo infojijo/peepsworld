@@ -1,5 +1,6 @@
 package com.cjnet.peepsworld.ui.dashboard
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.AllFeedsResponse
 import com.cjnet.peepsworld.models.Feed
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
+import com.cjnet.peepsworld.ui.adapter.FeedAdapter
 import com.cjnet.peepsworld.ui.adapter.ListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -34,7 +36,15 @@ class DashboardFragment : Fragment() {
 
     val feedList = ArrayList<Feed>()
 
+    private var PRIVATE_MODE = 0
+    private val PREF_NAME = "user_likes"
+    var likesString: String? = ""
+
     private fun beginFetch() {
+
+
+        val sharedPref: SharedPreferences? = activity?.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        likesString = sharedPref?.getString(PREF_NAME,"9")
 
         progressBar_layout.setVisibility(View.VISIBLE)
         val headMap: MutableMap<String, String> = HashMap()
@@ -74,7 +84,8 @@ class DashboardFragment : Fragment() {
             1,
             "",
             "",
-            ""
+            "",
+            false
         ))
 
         for (i in 0..feedResponse.feeds.size - 1) {
@@ -84,6 +95,13 @@ class DashboardFragment : Fragment() {
                 Log.v("Post Titles->", feedResponse.feeds.get(i).creator.creatorFullName+":"
                         +feedResponse.feeds.get(i).post.postTitle)
 
+
+                val feedId:String = feedResponse.feeds?.get(i)?.feedID
+                var liked:Boolean = false
+                if(likesString?.contains(feedId)?:false){
+                    liked = true
+                }
+
                 feedList.add(
                     Feed(
                         feedResponse.feeds.get(i).feedID,
@@ -92,7 +110,8 @@ class DashboardFragment : Fragment() {
                         0,
                         feedResponse.feeds.get(i).post.postLink,
                         feedResponse.feeds.get(i).feedLikeCount,
-                        feedResponse.feeds.get(i).feedCommentCount
+                        feedResponse.feeds.get(i).feedCommentCount,
+                        liked
                     )
                 )
             }
