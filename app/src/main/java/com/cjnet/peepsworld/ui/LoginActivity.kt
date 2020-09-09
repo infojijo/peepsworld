@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "user_sp"
+    private val PREF_ID = "user_id_sp"
     private val PREF_LIKES = "user_likes"
 
     private fun saveUser(email: String){
@@ -42,6 +43,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         val editor = sharedPref.edit()
         editor.putString(PREF_NAME, email)
+        editor.apply()
+    }
+
+    private fun saveUserId(id: String){
+
+        val sharedPref: SharedPreferences = getSharedPreferences(PREF_ID, PRIVATE_MODE)
+        val editor = sharedPref.edit()
+        editor.putString(PREF_ID, id)
         editor.apply()
     }
 
@@ -69,7 +78,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 arrangeLikes(result.feeds)
                 startActivity(Intent(this, LandingScreen::class.java))
                 this.finish()
-                Toast.makeText(applicationContext,"FeedID->"+result.feeds.get(0).commentText, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext,"FeedID->"+result.feeds.get(0).commentText, Toast.LENGTH_SHORT).show()
             },
                 { error ->
                     Log.w("Peeps",error.message)
@@ -93,8 +102,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     if(result.success.equals("200"))
                     {
-                        callLikes("1")
+                        callLikes(result.userId)
                         saveUser(result.userEmail)
+                        saveUserId(result.userId)
 
                     }
                     else{

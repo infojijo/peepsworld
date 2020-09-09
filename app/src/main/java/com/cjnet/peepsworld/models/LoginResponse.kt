@@ -18,5 +18,10 @@ data class LoginResponse(
 
     @Expose
     @SerializedName("userEmail")
-    val userEmail: String
+    val userEmail: String,
+
+    @Expose
+    @SerializedName("userId")
+    val userId: String
+
 )

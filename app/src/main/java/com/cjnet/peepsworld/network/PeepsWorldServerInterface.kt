@@ -27,6 +27,11 @@ interface PeepsWorldServerInterface {
     @GET("user_like_details.php")
     fun userLikes(@HeaderMap header: Map<String, String>, @Query("userID") userID: String):
             Observable<AllLikes>
+    @GET("user_feed_action_like.php")
+    fun actionLike(@HeaderMap header: Map<String, String>,
+                   @Query("userID") userID: String?,
+                   @Query("feedID") feedID: String):
+            Observable<ActionLikeResponse>
 
 
     companion object {
