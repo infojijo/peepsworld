@@ -67,6 +67,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    fun callLikesCount(){
+
+        val headMap: MutableMap<String, String> = HashMap()
+        headMap["Content-Type"] = "application/json"
+        disposable = wikiApiServe.likeCounts(headMap)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result ->
+                startActivity(Intent(this, LandingScreen::class.java))
+                this.finish()
+                Toast.makeText(applicationContext,"Feeds and Likes->"+result.feeds.size, Toast.LENGTH_SHORT).show()
+            },
+                { error ->
+                    Log.w("Peeps",error.message)
+                })
+
+    }
+
     fun callLikes(userdID: String) {
 
         val headMap: MutableMap<String, String> = HashMap()
@@ -76,8 +94,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 arrangeLikes(result.feeds)
+                //callLikesCount()
                 startActivity(Intent(this, LandingScreen::class.java))
                 this.finish()
+
                 //Toast.makeText(applicationContext,"FeedID->"+result.feeds.get(0).commentText, Toast.LENGTH_SHORT).show()
             },
                 { error ->

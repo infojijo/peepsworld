@@ -10,3 +10,7 @@ data class AllFeedsResponse(  @Expose
 data class AllLikes(  @Expose
                               @SerializedName("UserLikes")
                               val feeds: List<UserLikes>)
+
+data class AllLikeCount(  @Expose
+                      @SerializedName("LikeCount")
+                      val feeds: List<LikeCount>)

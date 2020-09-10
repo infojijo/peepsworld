@@ -33,6 +33,11 @@ interface PeepsWorldServerInterface {
                    @Query("feedID") feedID: String):
             Observable<ActionLikeResponse>
 
+    @GET("feed_like_count.php")
+    fun likeCounts(@HeaderMap header: Map<String, String>):
+            Observable<AllLikeCount>
+
+
 
     companion object {
         fun create(): PeepsWorldServerInterface {

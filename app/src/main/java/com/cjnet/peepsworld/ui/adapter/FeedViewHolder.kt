@@ -36,8 +36,8 @@ class FeedViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(movie: Feed) {
         mPostComment?.text = movie.post_text.toString()
         mProfile?.text = movie.profile_name.toString()
-        mCountLike?.text = movie.post_likes.toString()+" Likes"
-        mCountComment?.text = movie.post_comments.toString() +" Comments"
+        mCountLike?.text = movie.post_likes.toString()
+        mCountComment?.text = movie.post_comments.toString()
 
     }
 

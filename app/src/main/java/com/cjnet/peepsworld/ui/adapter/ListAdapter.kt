@@ -55,20 +55,30 @@ class ListAdapter(
             hold.bind(movie)
             hold.mLike?.setOnClickListener {
                 onLikeClick(list.get(position).post_feed_id)
+
+                var currentLike:Int = Integer.parseInt(hold.mCountLike?.text.toString())
+                var countAfterAction:Int
                 if(hold.mLike?.drawable?.constantState == ContextCompat.getDrawable(mContext, R.drawable.ic_like)?.constantState){
 
                     hold.mLike?.setImageResource(R.drawable.ic_liked);
                     list.get(position).post_liked_from_server = true
+                    countAfterAction = currentLike+1
+                    hold.mCountLike?.setText(countAfterAction.toString())
                 }
                 else{
                     hold.mLike?.setImageResource(R.drawable.ic_like);
                     list.get(position).post_liked_from_server = false
+
+                    countAfterAction = currentLike-1
+                    hold.mCountLike?.setText(countAfterAction.toString())
                 }
 
                 like(userId,list.get(position).post_feed_id)
             }
+
             if(list.get(position).post_liked_from_server){
-                hold.mLike?.setImageResource(R.drawable.ic_liked);
+                hold.mLike?.setImageResource(R.drawable.ic_liked)
+
             }
             else{
                 hold.mLike?.setImageResource(R.drawable.ic_like);
