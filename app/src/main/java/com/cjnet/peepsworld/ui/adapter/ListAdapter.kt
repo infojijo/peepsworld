@@ -63,13 +63,14 @@ class ListAdapter(
                     hold.mLike?.setImageResource(R.drawable.ic_liked);
                     list.get(position).post_liked_from_server = true
                     countAfterAction = currentLike+1
+                    list.get(position).post_likes = countAfterAction.toString()
                     hold.mCountLike?.setText(countAfterAction.toString())
                 }
                 else{
                     hold.mLike?.setImageResource(R.drawable.ic_like);
                     list.get(position).post_liked_from_server = false
-
                     countAfterAction = currentLike-1
+                    list.get(position).post_likes = countAfterAction.toString()
                     hold.mCountLike?.setText(countAfterAction.toString())
                 }
 

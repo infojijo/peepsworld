@@ -8,7 +8,7 @@ data class Feed(
     val profile_name: String,
     val post_type: Int,
     val post_url: String,
-    val post_likes : String,
+    var post_likes : String = "0",
     val post_comments :String,
     var post_liked_from_server:Boolean = false
 )

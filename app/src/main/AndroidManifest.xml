@@ -20,7 +20,8 @@
             android:name=".ui.LandingScreen"
             android:label="Landing Screen"></activity>
         <activity android:name=".ui.BottomSheetActivity" />
-        <activity android:name=".ui.RegistrationActivity" />
+        <activity android:name=".ui.RegistrationActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/AppTheme.SplashScreen">

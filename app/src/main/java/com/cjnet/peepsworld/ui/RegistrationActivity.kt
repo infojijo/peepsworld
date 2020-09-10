@@ -140,7 +140,7 @@ class RegistrationActivity : AppCompatActivity(), View.OnClickListener {
                 { result ->
                     progressBar_layout.setVisibility(View.INVISIBLE)
                     if (result.success == "201") {
-                        startActivity(Intent(this, LandingScreen::class.java))
+                        startActivity(Intent(this, LoginActivity::class.java))
                     }
                 },
                 { error ->
