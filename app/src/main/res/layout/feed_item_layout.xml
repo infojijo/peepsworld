@@ -167,15 +167,15 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:id="@+id/count_likes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/count_likes"
                         android:text="998" />
 
                     <TextView
+                        android:id="@+id/likes_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/likes_text"
                         android:paddingLeft="5dp"
                         android:text="Likes" />
 
@@ -189,15 +189,16 @@
                         android:src="@drawable/ic_dot" />
 
                     <TextView
+                        android:id="@+id/count_comments"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/count_comments"
                         android:layout_marginLeft="10dp"
                         android:text="200" />
+
                     <TextView
+                        android:id="@+id/comments_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/comments_text"
                         android:paddingLeft="5dp"
                         android:text="Comments" />
                 </LinearLayout>
@@ -221,5 +222,23 @@
             </LinearLayout>
 
         </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/layout_comments_bar"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/et_comment"
+            android:hint="Start typing..."
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_comment"
+            android:text="Post"/>
+
     </RelativeLayout>
 </LinearLayout>

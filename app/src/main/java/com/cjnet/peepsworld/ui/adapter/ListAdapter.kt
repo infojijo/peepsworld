@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cjnet.peepsworld.R
 import com.cjnet.peepsworld.models.Feed
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
+import com.cjnet.peepsworld.ui.dashboard.DashboardFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class ListAdapter(
     private var list: List<Feed>,
-    private val mContext: Context
+    private val mContext: Context,
+    private val fragment: DashboardFragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var disposable: Disposable? = null
@@ -25,6 +27,7 @@ class ListAdapter(
     }
     private val PREF_ID = "user_id_sp"
 
+    var dashFragment:DashboardFragment?=null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -54,7 +57,7 @@ class ListAdapter(
             hold = holder as FeedViewHolder
             hold.bind(movie)
             hold.mLike?.setOnClickListener {
-                onLikeClick(list.get(position).post_feed_id)
+                //onLikeClick(list.get(position).post_feed_id)
 
                 var currentLike:Int = Integer.parseInt(hold.mCountLike?.text.toString())
                 var countAfterAction:Int
@@ -83,6 +86,10 @@ class ListAdapter(
             }
             else{
                 hold.mLike?.setImageResource(R.drawable.ic_like);
+            }
+
+            hold.mComment?.setOnClickListener {
+                fragment.openCommentSheet(list.get(position).post_feed_id.toInt())
             }
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
@@ -137,6 +144,9 @@ class ListAdapter(
         } else {
             return 0;
         }
+    }
+    interface clickAction {
+        fun openCommentSheet(feedId: Int)
     }
 
 }

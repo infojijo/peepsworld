@@ -1,6 +1,5 @@
 package com.cjnet.peepsworld.ui.dashboard
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,17 +18,18 @@ import com.cjnet.peepsworld.models.AllFeedsResponse
 import com.cjnet.peepsworld.models.AllLikeCount
 import com.cjnet.peepsworld.models.Feed
 import com.cjnet.peepsworld.network.PeepsWorldServerInterface
-import com.cjnet.peepsworld.ui.LandingScreen
-import com.cjnet.peepsworld.ui.adapter.FeedAdapter
 import com.cjnet.peepsworld.ui.adapter.ListAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.layout_bottom_sheet_comments.*
 import kotlinx.android.synthetic.main.progress_layout.*
 
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : Fragment(), ListAdapter.clickAction {
 
     private lateinit var menuViewModel: DashboardViewModel
 
@@ -42,6 +43,9 @@ class DashboardFragment : Fragment() {
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "user_likes"
     var likesString: String? = ""
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
 
     fun callLikesCount(feedResponse: AllFeedsResponse){
 
@@ -146,7 +150,7 @@ class DashboardFragment : Fragment() {
         }
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListAdapter(feedList, context)
+            adapter = ListAdapter(feedList, context,this@DashboardFragment)
         }
 
     }
@@ -174,7 +178,40 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        beginFetch()
 
+        bottomSheetBehavior = from(bottomSheet)
+
+
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetCallback(){
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    STATE_COLLAPSED -> Toast.makeText(activity, "STATE_COLLAPSED", Toast.LENGTH_SHORT).show()
+                    STATE_EXPANDED -> Toast.makeText(activity, "STATE_EXPANDED", Toast.LENGTH_SHORT).show()
+                    STATE_DRAGGING -> Toast.makeText(activity, "STATE_DRAGGING", Toast.LENGTH_SHORT).show()
+                    STATE_SETTLING -> Toast.makeText(activity, "STATE_SETTLING", Toast.LENGTH_SHORT).show()
+                    STATE_HIDDEN -> Toast.makeText(activity, "STATE_HIDDEN", Toast.LENGTH_SHORT).show()
+                    else -> Toast.makeText(activity, "OTHER_STATE", Toast.LENGTH_SHORT).show()
+                }}
+        })
+
+
+        beginFetch()
     }
+
+    override fun openCommentSheet(feedId: Int) {
+        Toast.makeText(activity,"Feed Id ->"+feedId,Toast.LENGTH_LONG).show()
+
+        if (bottomSheetBehavior.state == STATE_EXPANDED)
+            bottomSheetBehavior.state = STATE_COLLAPSED
+        else
+            bottomSheetBehavior.state = STATE_EXPANDED
+    }
+
+
+
 }
