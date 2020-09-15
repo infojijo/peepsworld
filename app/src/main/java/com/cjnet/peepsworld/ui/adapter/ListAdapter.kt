@@ -89,7 +89,9 @@ class ListAdapter(
             }
 
             hold.mComment?.setOnClickListener {
-                fragment.openCommentSheet(list.get(position).post_feed_id.toInt())
+                fragment.openCommentSheet(list.get(position).post_feed_id.toInt(),
+                    list.get(position).post_likes.toInt(),
+                    list.get(position).post_comments.toInt())
             }
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
@@ -146,7 +148,7 @@ class ListAdapter(
         }
     }
     interface clickAction {
-        fun openCommentSheet(feedId: Int)
+        fun openCommentSheet(feedId: Int, likesCount:Int , commentsCount: Int)
     }
 
 }

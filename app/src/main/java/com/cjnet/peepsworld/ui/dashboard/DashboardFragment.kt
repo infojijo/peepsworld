@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -32,17 +33,15 @@ import kotlinx.android.synthetic.main.progress_layout.*
 class DashboardFragment : Fragment(), ListAdapter.clickAction {
 
     private lateinit var menuViewModel: DashboardViewModel
-
     val wikiApiServe by lazy {
         PeepsWorldServerInterface.create()
     }
     var disposable: Disposable? = null
-
     val feedList = ArrayList<Feed>()
-
     private var PRIVATE_MODE = 0
     private val PREF_NAME = "user_likes"
     var likesString: String? = ""
+    var scrollLock: Boolean = false
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -100,7 +99,6 @@ class DashboardFragment : Fragment(), ListAdapter.clickAction {
     }
 
     fun arrangeFeed(feedResponse: AllFeedsResponse, likeCount: AllLikeCount) {
-
         feedList.add(Feed(
             "",
             "",
@@ -111,7 +109,6 @@ class DashboardFragment : Fragment(), ListAdapter.clickAction {
             "",
             false
         ))
-
         for (i in 0..feedResponse.feeds.size - 1) {
 
             var countLike:String = "0"
@@ -121,13 +118,10 @@ class DashboardFragment : Fragment(), ListAdapter.clickAction {
                 }
             }
 
-
             if (feedResponse.feeds.get(i).post.postTitle != null &&
                 !feedResponse.feeds.get(i).post.postTitle.equals("")) {
                 Log.v("Post Titles->", feedResponse.feeds.get(i).creator.creatorFullName+":"
                         +feedResponse.feeds.get(i).post.postTitle)
-
-
                 val feedId:String = feedResponse.feeds?.get(i)?.feedID
                 var liked:Boolean = false
                 if(likesString?.contains(feedId)?:false){
@@ -152,7 +146,6 @@ class DashboardFragment : Fragment(), ListAdapter.clickAction {
             layoutManager = LinearLayoutManager(activity)
             adapter = ListAdapter(feedList, context,this@DashboardFragment)
         }
-
     }
 
     override fun onCreateView(
@@ -171,47 +164,67 @@ class DashboardFragment : Fragment(), ListAdapter.clickAction {
         menuViewModel.text.observe(this, Observer {
             textView.text = it
         })
-
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recycler_view.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, m: MotionEvent): Boolean {
 
-        bottomSheetBehavior = from(bottomSheet)
-
-
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetCallback(){
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
+                if (bottomSheetBehavior.state == STATE_EXPANDED) {
+                    return scrollLock
+                }
+                else {
+                    return scrollLock
+                }
             }
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    STATE_COLLAPSED -> Toast.makeText(activity, "STATE_COLLAPSED", Toast.LENGTH_SHORT).show()
-                    STATE_EXPANDED -> Toast.makeText(activity, "STATE_EXPANDED", Toast.LENGTH_SHORT).show()
-                    STATE_DRAGGING -> Toast.makeText(activity, "STATE_DRAGGING", Toast.LENGTH_SHORT).show()
-                    STATE_SETTLING -> Toast.makeText(activity, "STATE_SETTLING", Toast.LENGTH_SHORT).show()
-                    STATE_HIDDEN -> Toast.makeText(activity, "STATE_HIDDEN", Toast.LENGTH_SHORT).show()
-                    else -> Toast.makeText(activity, "OTHER_STATE", Toast.LENGTH_SHORT).show()
-                }}
         })
 
 
+        /* recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                 super.onScrollStateChanged(recyclerView, newState)
+
+             }
+         })*/
+
+
+
+        bottomSheetBehavior = from(bottomSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetCallback(){
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    STATE_COLLAPSED ->{ //Toast.makeText(activity, "STATE_COLLAPSED", Toast.LENGTH_SHORT).show()
+                        scrollLock = false}
+                    STATE_EXPANDED ->{ //Toast.makeText(activity, "STATE_EXPANDED", Toast.LENGTH_SHORT).show()
+                        scrollLock = true}
+                  /*  STATE_DRAGGING -> Toast.makeText(activity, "STATE_DRAGGING", Toast.LENGTH_SHORT).show()
+                    STATE_SETTLING -> Toast.makeText(activity, "STATE_SETTLING", Toast.LENGTH_SHORT).show()
+                    STATE_HIDDEN -> Toast.makeText(activity, "STATE_HIDDEN", Toast.LENGTH_SHORT).show()*/
+                    else -> {}//Toast.makeText(activity, "OTHER_STATE", Toast.LENGTH_SHORT).show()
+                }}
+        })
         beginFetch()
     }
 
-    override fun openCommentSheet(feedId: Int) {
+    override fun openCommentSheet(feedId: Int, likes:Int, comment:Int) {
         Toast.makeText(activity,"Feed Id ->"+feedId,Toast.LENGTH_LONG).show()
-
-        if (bottomSheetBehavior.state == STATE_EXPANDED)
+        bottom_sheet_like_count.setText(" "+likes)
+        bottom_sheet_comment_count.setText(" "+comment)
+        if (bottomSheetBehavior.state == STATE_EXPANDED){
             bottomSheetBehavior.state = STATE_COLLAPSED
-        else
+
+        }
+        else{
             bottomSheetBehavior.state = STATE_EXPANDED
+
+        }
+
+
     }
-
-
-
 }

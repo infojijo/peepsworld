@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_top_style"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
+    android:layout_marginTop="100dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
@@ -17,19 +20,36 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/middle_bottom_sheet"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
             android:src="@drawable/ic_liked" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="50dp"
+            android:text="10" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_comment" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="21" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,11 +58,12 @@
         android:layout_height="300dp"
         android:layout_below="@id/top_bottom_sheet"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bottom_sheet"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067" />
 
     <RelativeLayout
         android:id="@+id/bottom_bottom_sheet"
