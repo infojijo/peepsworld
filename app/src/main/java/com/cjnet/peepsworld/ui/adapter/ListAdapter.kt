@@ -89,10 +89,17 @@ class ListAdapter(
             }
 
             hold.mComment?.setOnClickListener {
-                fragment.openCommentSheet(list.get(position).post_feed_id.toInt(),
+                callComments(list.get(position).post_feed_id.toInt(),
                     list.get(position).post_likes.toInt(),
                     list.get(position).post_comments.toInt())
             }
+
+            hold.mCountComment?.setOnClickListener {
+                callComments(list.get(position).post_feed_id.toInt(),
+                    list.get(position).post_likes.toInt(),
+                    list.get(position).post_comments.toInt())
+            }
+
         } else if (movie.post_type == 2) {
             holdURL = holder as FeedURLHolder
             holdURL.bind(movie, mContext)
@@ -104,6 +111,12 @@ class ListAdapter(
             holdhead.bind(movie, mContext)
         }
     }
+    fun callComments(id:Int, likes:Int, comments:Int){
+        fragment.openCommentSheet(id,
+            likes,
+            comments)
+    }
+
 
     fun like(userId: String?, feedId:String){
 
